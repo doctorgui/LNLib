@@ -30,7 +30,7 @@ Algorithms in ***The NURBS Book***:
 |***Chapter 12***  | Curve Clamp/UnClamp/IsClamp </br> KnotVector IsUniform </br> Curve IsClosed/IsPeriodic|
 
 Additional Algorithms:
-|Description|Content|
+|Item|Content|
 |--|--|  
 |***NURBS Curve***  | Curve Curvature and Normal</br>Curve Split/Segment/Merge/Offset</br>Curve IsLinear/IsArc</br>Curve Approximate Length</br>Curve Extension (Tangent/Arc/Natural)</br>Curve Tessellation</br>Line/Cubic Hermite (as NURBS) Creation|
 |***NURBS Surface***  | Surface AABB and OBB BoundingBox</br>Surface Curvature and Normal</br>Surface Approximate Area</br> Surface Triangulation |
@@ -263,7 +263,7 @@ Welcome join this project including discussions in **Issues** and make **Pull re
 [csulijunji](https://github.com/csulijunji)
 
 ## Use Cases
-- [fplnlib](https://github.com/zamtmn/fplnlib): **Pascal** Version NURBS Algorithm
+- [fplnlib](https://github.com/zamtmn/fplnlib): **Pascal** Version of NURBS Algorithm
 - [VL.Nurbsy](https://github.com/antokhio/VL.Nurbsy): **Native C#** Version of NURBS Algorithm
 
 ## Contact
