@@ -1,8 +1,7 @@
 ## Introduction
-**LNLib is a NURBS Algorithms Kernel Library.** <br/>These algorithms are primary referenced from [The NURBS Book 2nd Edition](https://link.springer.com/book/10.1007/978-3-642-97385-7). <br/>For NURBS **Curve | Surface | Volume**
+**LNLib is a NURBS Algorithms Kernel Library.** <br/>These algorithms are primary referenced from [The NURBS Book 2nd Edition](https://link.springer.com/book/10.1007/978-3-642-59223-2). <br/>For NURBS **Curve | Surface | Volume**
 
 <img src="assets/LNLib.png" width=400 height=200> 
-
 
 ## Build Project
 |Project|API Language|Instruction|
@@ -276,4 +275,4 @@ LNLib is created by Yuqing Liang (BIMCoder Liang).
 The source code is published under [LGPL 2.1](https://www.gnu.org/licenses/), the license is available [here](LICENSE).
 
 ## Primary Reference
-[The NURBS Book 2nd Edition](https://link.springer.com/book/10.1007/978-3-642-97385-7) by **Les Piegl & Wayne Tiller**
+[The NURBS Book 2nd Edition](https://link.springer.com/book/10.1007/978-3-642-59223-2) by **Les Piegl & Wayne Tiller**
