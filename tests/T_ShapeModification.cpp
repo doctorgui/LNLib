@@ -26,7 +26,7 @@ TEST(Test_Advanced, All)
 		curve.ControlPoints = cps;
 
 		LN_NurbsCurve newCurve;
-		bool result = NurbsCurve::ControlPointReposition(curve, 2, moveIndex, direction, distance, newCurve);
+		bool result = NurbsCurve::MoveControlPoint(curve, 2, moveIndex, direction, distance, newCurve);
 		EXPECT_TRUE(result);
 	}
 	{

@@ -3189,30 +3189,54 @@ bool LNLib::NurbsCurve::FitWithCubic(const std::vector<XYZ>& throughPoints, int 
 	return true;
 }
 
-bool LNLib::NurbsCurve::ControlPointReposition(const LN_NurbsCurve& curve, double parameter, int moveIndex, XYZ moveDirection, double moveDistance, LN_NurbsCurve& result)
+bool LNLib::NurbsCurve::MoveControlPoint(const LN_NurbsCurve& curve, double parameter, int moveIndex, XYZ moveDirection, double moveDistance, LN_NurbsCurve& result)
 {
 	int degree = curve.Degree;
-	std::vector<double> knotVector = curve.KnotVector;
-	std::vector<XYZW> controlPoints = curve.ControlPoints;
+	const auto& knotVector = curve.KnotVector;
+	const auto& controlPoints = curve.ControlPoints;
 
 	VALIDATE_ARGUMENT_RANGE(parameter, knotVector[0], knotVector[knotVector.size() - 1]);
 	VALIDATE_ARGUMENT_RANGE(moveIndex, 0, controlPoints.size() - 1);
 	VALIDATE_ARGUMENT(!moveDirection.IsZero(), "moveDirection", "MoveDirection must not be zero vector.");
-	VALIDATE_ARGUMENT(!MathUtils::IsAlmostEqualTo(moveDistance,0.0), "moveDistance", "MoveDistance must not be zero.")
+	VALIDATE_ARGUMENT(!MathUtils::IsAlmostEqualTo(moveDistance, 0.0), "moveDistance", "MoveDistance must not be zero.")
 
 	int spanIndex = Polynomials::GetKnotSpanIndex(degree, knotVector, parameter);
-	double basis[Constants::NURBSMaxDegree + 1];
-	Polynomials::BasisFunctions(spanIndex, degree, knotVector, parameter, basis);
-	double Rkp = basis[0];
-	if (MathUtils::IsLessThan(Rkp, 0.0))
-	{
+	if (moveIndex < spanIndex - degree || moveIndex > spanIndex) {
 		return false;
 	}
+
+	double basis[Constants::NURBSMaxDegree + 1];
+	Polynomials::BasisFunctions(spanIndex, degree, knotVector, parameter, basis);
+
+	double denom = 0.0;
+	int startIdx = spanIndex - degree;
+	for (int i = 0; i <= degree; ++i) {
+		int ctrlIdx = startIdx + i;
+		double weight = controlPoints[ctrlIdx].GetW();
+		denom += basis[i] * weight;
+	}
+
+	if (MathUtils::IsAlmostEqualTo(denom, 0.0)) {
+		return false;
+	}
+
+	int offset = moveIndex - startIdx;
+
+	double basis_k = basis[offset];
+	double weight_k = controlPoints[moveIndex].GetW();
+	double Rkp = (basis_k * weight_k) / denom;
+
+	if (MathUtils::IsLessThan(Rkp, 0.0) || MathUtils::IsAlmostEqualTo(Rkp, 0.0)) {
+		return false;
+	}
+
 	std::vector<XYZW> updatedControlPoints = controlPoints;
 	XYZ movePoint = updatedControlPoints[moveIndex].ToXYZ(true);
+
 	double alpha = moveDistance / (moveDirection.Length() * Rkp);
 	XYZ newPoint = movePoint + alpha * moveDirection;
-	updatedControlPoints[moveIndex] = XYZW(newPoint, controlPoints[moveIndex].GetW());
+
+	updatedControlPoints[moveIndex] = XYZW(newPoint, weight_k);
 
 	result.Degree = degree;
 	result.KnotVector = knotVector;

@@ -304,7 +304,7 @@ namespace LNLib
 		/// The NURBS Book 2nd Edition Page511
 		/// Reposition an arbitrary control point.
 		/// </summary>
-		static bool ControlPointReposition(const LN_NurbsCurve& curve, double parameter, int moveIndex, XYZ moveDirection, double moveDistance, LN_NurbsCurve& result);
+		static bool MoveControlPoint(const LN_NurbsCurve& curve, double parameter, int moveIndex, XYZ moveDirection, double moveDistance, LN_NurbsCurve& result);
 
 		/// <summary>
 		/// The NURBS Book 2nd Edition Page520
